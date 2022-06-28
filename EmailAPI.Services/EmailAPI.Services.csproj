@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EmailAPI.Core\EmailAPI.Core.csproj" />
+    <ProjectReference Include="..\EmailAPI.DataAccess\EmailAPI.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

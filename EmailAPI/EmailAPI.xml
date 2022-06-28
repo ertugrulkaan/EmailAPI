@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EmailAPI</name>
+    </assembly>
+    <members>
+        <member name="M:EmailAPI.Controllers.AccountController.Login(EmailAPI.Models.Identity.LoginModel)">
+            <summary>
+            Login with your username and password
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EmailAPI.Controllers.AccountController.Register(EmailAPI.Core.Model.RegisterModel)">
+            <summary>
+            Only admins can create new users
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EmailAPI.Controllers.AccountController.ChangePassword(EmailAPI.Models.Identity.ChangePasswordModel)">
+            <summary>
+            Change password with your username and email address
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
