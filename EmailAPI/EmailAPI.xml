@@ -25,5 +25,33 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:EmailAPI.Controllers.EmailSenderController.SendBySmtp(EmailAPI.Core.Model.DirectlySendMailModel)">
+            <summary>
+            Sends same mail from given host to given addresses by .NET SMTP. Use ';' between multiple addresses.
+            </summary>
+            <param name="mail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EmailAPI.Controllers.EmailSenderController.SendByMailKit(EmailAPI.Core.Model.SendByMailkitModel)">
+            <summary>
+            Sends same mail from given host to given addresses by MailKit. Use ';' between multiple addresses.
+            </summary>
+            <param name="mail"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EmailAPI.Controllers.EmailSettingController.Post(EmailAPI.Models.EmailSetting)">
+            <summary>
+            Right now just first setting is used.
+            </summary>
+            <param name="emailSetting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EmailAPI.Controllers.GroupReceiverController.GetGroupReceivers(System.Int32)">
+            <summary>
+            Returns GroupReceivers with group and receiver information in it, by group Id
+            </summary>
+            <param name="groupId"></param>
+            <returns>Returns GroupReceivers with group and receiver information in it, by group Id</returns>
+        </member>
     </members>
 </doc>

@@ -1,3 +1,5 @@
+using EmailAPI.DataAccess;
+using EmailAPI.DataAccess.Interfaces;
 using EmailAPI.Models;
 using EmailAPI.Models.Identity;
 using EmailAPI.Services;
@@ -6,22 +8,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EmailAPI
 {
@@ -163,14 +159,23 @@ namespace EmailAPI
                 endpoints.MapControllers();
             });
 
-            ApplicationDbContextSeed.SeedEssentialAsync(userManager, roleManager);
+            ApplicationDbContextSeed.SeedData(userManager, roleManager);
         }
         private void ConfigureDependencies(IServiceCollection services)
         {
             // Repositories DI
+            services.AddTransient<IGroupRepository, GroupRepository>();
+            services.AddTransient<IReceiverRepository, ReceiverRepository>();
+            services.AddTransient<IGroupReceiverRepository, GroupReceiverRepository>();
+            services.AddTransient<IEmailSettingRepository, EmailSettingRepository>();
 
             // Services DI
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IReceiverService, ReceiverService>();
+            services.AddTransient<IGroupReceiverService, GroupReceiverService>();
+            services.AddTransient<IEmailSettingService, EmailSettingService>();
         }
     }
 }

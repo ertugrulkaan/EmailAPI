@@ -9,10 +9,8 @@ namespace EmailAPI.Models
         public long GroupId { get; set; }
         public long ReceiverId { get; set; }
 
-        [JsonIgnore]
-        [ForeignKey("ReceiverIdId")]
+        [ForeignKey("ReceiverId")]
         public Receiver Receiver { get; set; }
-        [JsonIgnore]
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
 

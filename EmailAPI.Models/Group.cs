@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EmailAPI.Models
 {
@@ -6,7 +9,9 @@ namespace EmailAPI.Models
     {
         [Required]
         public string Name { get; set; }
-        public string CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        [JsonIgnore]
+        public List<GroupReceiver> GroupReceivers { get; set; }
 
     }
 }

@@ -6,28 +6,51 @@ namespace EmailAPI.Models.Identity
 {
     public static class ApplicationDbContextSeed
     {
-        public static async Task SeedEssentialAsync(UserManager<ApplicationUser> userManager,
+        public static void SeedData(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager)
         {
+            SeedRoles(roleManager);
+            SeedUsers(userManager);
+        }
+        private static void SeedRoles(RoleManager<ApplicationRole> roleManager)
+        {
             //Seed roles
-            await roleManager.CreateAsync(new ApplicationRole() { Name = Authorization.Roles.Administrator.ToString(), NormalizedName = Authorization.Roles.Administrator.ToString() });
-            await roleManager.CreateAsync(new ApplicationRole() { Name = Authorization.Roles.User.ToString(), NormalizedName = Authorization.Roles.Administrator.ToString() });
-
-            //Seed Default User
-            var defaultUser = new ApplicationUser
+            if (!roleManager.RoleExistsAsync(Authorization.Roles.Administrator.ToString()).Result)
             {
-                UserName = Authorization.default_username,
-                Email = Authorization.default_email,
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true,
-                FirstName = Authorization.default_firstname,
-                LastName = Authorization.default_lastname
-            };
+                var role = new ApplicationRole() { Name = Authorization.Roles.Administrator.ToString(), NormalizedName = Authorization.Roles.Administrator.ToString() };
+                roleManager.CreateAsync(role).Wait();
+            }
 
-            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+            if (!roleManager.RoleExistsAsync(Authorization.Roles.User.ToString()).Result)
             {
-                await userManager.CreateAsync(defaultUser, Authorization.default_password);
-                await userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString());
+                var role = new ApplicationRole() { Name = Authorization.Roles.User.ToString(), NormalizedName = Authorization.Roles.User.ToString() };
+                roleManager.CreateAsync(role).Wait();
+            }
+        }
+        private static void SeedUsers(UserManager<ApplicationUser> userManager)
+        {
+            if (userManager.FindByNameAsync(Authorization.default_username).Result == null)
+            {
+                var defaultUser = new ApplicationUser
+                {
+                    UserName = Authorization.default_username,
+                    Email = Authorization.default_email,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    FirstName = Authorization.default_firstname,
+                    LastName = Authorization.default_lastname
+                };
+
+                var password = Authorization.default_password;
+                var passwordHasher = new PasswordHasher<ApplicationUser>();
+                defaultUser.PasswordHash = passwordHasher.HashPassword(defaultUser, password);
+
+                var result = userManager.CreateAsync(defaultUser).Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString()).Wait();
+                }
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EmailAPI.Models
 {
@@ -11,6 +13,8 @@ namespace EmailAPI.Models
         public string Country { get; set; }
         public string Address { get; set; }
         public bool IsValid { get; set; }
+        [JsonIgnore]
+        public List<GroupReceiver> GroupReceivers { get; set; }
 
     }
 }

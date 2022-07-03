@@ -29,7 +29,7 @@ namespace EmailAPI.DataAccess.Base
 
         public virtual T Get(long id)
         {
-            return context.Set<T>().Find(id) ;
+            return context.Set<T>().Find(id);
         }
 
         public virtual IEnumerable<T> GetBy(Expression<Func<T, bool>> expression)
@@ -51,7 +51,7 @@ namespace EmailAPI.DataAccess.Base
 
         public virtual void Delete(T entity)
         {
-            context.Set<T>().Update(entity);
+            context.Set<T>().Remove(entity);
             context.SaveChanges();
         }
     }
